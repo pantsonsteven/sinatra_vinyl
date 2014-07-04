@@ -14,4 +14,4 @@ Sinatra Vinyl is a simple Sinatra CRUD application that allows you to manage you
 
 ###Screenshots
 
-![Sinatra Vinyl Screenshot](/public/images/Screenshot.jpg)
+![Sinatra Vinyl Screenshot](/public/images/screenshot.jpg)
