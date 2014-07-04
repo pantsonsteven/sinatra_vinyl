@@ -1,1 +1,12 @@
-edit.html.erb
+<h2>Edit this New Record</h2>
+
+<form action="/records/<%= @record[0]['id'] %>" method="post">
+    <input type="hidden" name="_method" value="put">
+    <input type="text" name="title" value="<%= @record[0]['title'] %>">
+    <input type="text" name="artist" value="<%= @record[0]['artist'] %>">
+    <input type="submit" value="SUBMIT CHANGES">
+</form>
+<br>
+
+<a href="/records">HOME</a>
+<a href="/records/<%= @record[0]['id'] %>">VIEW RECORD</a>

@@ -10,13 +10,21 @@
     <th>
         <h4>Artist</h4>
     </th>
+    <th>
+    </th>
     <% @records.each do |record| %>
         <tr>
             <td>
-                <a href="/record/<%= record['id'] %>"><%= record['title'] %></a>
+                <a href="/records/<%= record['id'] %>"><%= record['title'] %></a>
             </td>
             <td>
                 <%= record['artist']%>
+            </td>
+            <td>
+                <form action="/records/<%= record['id'] %>" method='post'>
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="submit" value="DELETE">
+                </form>
             </td>
         </tr>
     <% end %>
