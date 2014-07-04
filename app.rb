@@ -60,7 +60,6 @@ end
 
 #UPDATE
 put '/records/:id' do 
-
    record = Record.find(params[:id])
    record.update(artist: params[:artist], title: params[:title])
 
@@ -71,5 +70,6 @@ end
 #DESTROY
 delete '/records/:id' do
    Record.delete(params[:id])   
+   
    redirect '/records'
 end
