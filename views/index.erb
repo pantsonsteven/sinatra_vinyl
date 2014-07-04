@@ -15,13 +15,13 @@
     <% @records.each do |record| %>
         <tr>
             <td>
-                <a href="/records/<%= record['id'] %>"><%= record['title'] %></a>
+                <a href="/records/<%= record.id %>"><%= record.title %></a>
             </td>
             <td>
-                <%= record['artist']%>
+                <%= record.artist%>
             </td>
             <td>
-                <form action="/records/<%= record['id'] %>" method='post'>
+                <form action="/records/<%= record.id %>" method='post'>
                     <input type="hidden" name="_method" value="delete">
                     <input type="submit" value="DELETE">
                 </form>

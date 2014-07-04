@@ -1,10 +1,10 @@
 <h2>Record Details</h2>
 
 <h3>Title</h3>
-<p><%= @record[0]['title'] %></p>
+<p><%= @record.title %></p>
 
 <h3>Artist</h3>
-<p><%= @record[0]['artist'] %></p>
+<p><%= @record.artist %></p>
 
 <a href="/records">HOME</a>
-<a href="/records/<%= @record[0]['id'] %>/edit">EDIT RECORD</a>
+<a href="/records/<%= @record.id %>/edit">EDIT RECORD</a>

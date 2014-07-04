@@ -22,44 +22,10 @@ get '/' do
 end
 
 get '/records' do 
-
-   connection     = PG.connect(dbname: 'vinyl')
-   sql_statement  = 'SELECT * FROM records;'
-   response       = connection.exec(sql_statement)
-
-   @records = response.map do |record|
-      {
-         'id'       => record['id'],
-         'title'    => record['title'], 
-         'artist'   => record['artist']
-      }
-   end
-
-   connection.close
+   @records = Record.order('created_at DESC')
+   redirect '/records/new' if @records.empty?
 
    erb :index
-
-end
-
-# SHOW
-get '/records/:id' do 
-   id = params[:id]
-
-   connection     = PG.connect(dbname: 'vinyl')
-   sql_statement  = "SELECT * FROM records WHERE id=#{id}"
-   response       = connection.exec(sql_statement)
-
-   @record = response.map do |record|
-      {
-         'id'       => record['id'], 
-         'title'    => record['title'],
-         'artist'   => record['artist']
-      }      
-   end
-
-   connection.close
-
-   erb :show
 end
 
 # NEW
@@ -67,66 +33,43 @@ get '/records/new' do
    erb :new
 end
 
+# SHOW
+get '/records/:id' do 
+   @record = Record.find(params[:id])
+   erb :show
+end
+
 #CREATE
 post '/records' do 
-   title    = params[:title]
-   artist   = params[:artist]
+   @record = Record.new(artist: params[:artist], title: params[:title])
 
-   connection     = PG.connect(dbname: 'vinyl')
-   sql_statement  = "INSERT INTO records (title, artist) VALUES ('#{title}', '#{artist}');"
-   response       = connection.exec(sql_statement)
+   if @record.save
+      redirect "/records"
+   else
+      erb :new
+   end
 
-   connection.close
-
-   redirect '/records'
 end
 
 #EDIT
 get '/records/:id/edit' do 
-   id = params[:id]
-
-   connection     = PG.connect(dbname: 'vinyl')
-   sql_statement  = "SELECT * FROM records WHERE id=#{id}"
-   response       = connection.exec(sql_statement)
-
-   @record = response.map do |record|
-      {
-         'id' => record['id'], 
-         'title' => record['title'], 
-         'artist' => record['artist']
-      }      
-   end 
-
-   connection.close
+   @record = Record.find(params[:id])
 
    erb :edit
 end
 
 #UPDATE
 put '/records/:id' do 
-   id       = params[:id]
-   title    = params[:title]
-   artist   = params[:artist]
 
-   connection     = PG.connect(dbname: 'vinyl')
-   sql_statement  = "UPDATE records SET artist='#{artist}', title='#{title}' WHERE id=#{id};"
-   response       = connection.exec(sql_statement)
+   record = Record.find(params[:id])
+   record.update(artist: params[:artist], title: params[:title])
 
-   connection.close
-
-   redirect "records/#{id}"
+   redirect "records/#{record.id}"
 end
 
 
 #DESTROY
 delete '/records/:id' do
-   id = params[:id]
-
-   connection     = PG.connect(dbname: 'vinyl')
-   sql_statement  = "DELETE FROM records WHERE id=#{id};"
-   response       = connection.exec(sql_statement)
-
-   connection.close
-      
-   redirect '/'
+   Record.delete(params[:id])   
+   redirect '/records'
 end
