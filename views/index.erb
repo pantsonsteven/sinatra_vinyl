@@ -1,0 +1,23 @@
+<h2>Your Records!</h2>
+
+<a href="/records/new">Add a New Record</a>
+<br>
+<br>
+<table>
+    <th>
+        <h4>Record</h4>
+    </th>
+    <th>
+        <h4>Artist</h4>
+    </th>
+    <% @records.each do |record| %>
+        <tr>
+            <td>
+                <a href="/record/<%= record['id'] %>"><%= record['title'] %></a>
+            </td>
+            <td>
+                <%= record['artist']%>
+            </td>
+        </tr>
+    <% end %>
+</table>

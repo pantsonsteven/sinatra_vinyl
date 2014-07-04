@@ -1,0 +1,11 @@
+table {
+   border: solid 1px darkgrey;
+}
+
+th {
+   border: solid 1px darkgrey;
+}
+
+td {
+   border: dashed 1px darkgrey;
+}
